@@ -1,0 +1,50 @@
+<h1>My phone book!</h1>
+<hr>
+
+<div class="wrap">
+    <input [(ngModel)]="searchField" type="text" class="search" placeholder="search text goes here">
+    <input (click)="startAddFunc()" type="button" class="add" value="add phone">
+</div>
+
+<hr>
+
+<table>
+    <tr>
+        <th (click)="changeSort('firstName')">First name<span *ngIf="sortDir">▲</span><span *ngIf="!sortDir">▼</span></th>
+        <th (click)="changeSort('lastName')">Last name<span *ngIf="sortDir">▲</span><span *ngIf="!sortDir">▼</span></th>
+        <th (click)="changeSort('phoneNumber')">Number<span *ngIf="sortDir">▲</span><span *ngIf="!sortDir">▼</span></th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+</table>
+
+<hr>
+
+<table>
+    <tr *ngFor="let page of phoneBook | search:searchField | sort: sortName: sortDir ; let i=index">
+        <td>{{ page.firstName }}</td>
+        <td>{{ page.lastName }}</td>
+        <td>{{ page.phoneNumber }}</td>
+        <td><input (click)="editFunc(i)" type="button" value="edit"></td>
+        <td><input (click)="deleteElem(i)" type="button" value="delete"></td>
+    </tr>
+</table>
+
+<div *ngIf="addCheck" class="addPhoneWrap">
+    <div class="addPhone">
+        <div class="addPhone__head">
+            <h2>Add phone</h2>
+            <input (click)="endAddFunc()" type="button" value="×">
+        </div>
+        <hr>
+        <div class="addPhone__main">
+            <input [(ngModel)]="firstNameInput" type="text" placeholder="first name goes here">
+            <input [(ngModel)]="lastNameInput" type="text" placeholder="last name goes here">
+            <input [(ngModel)]="phoneNumbInput" type="text" placeholder="number phone goes here">
+        </div>
+        <hr>
+        <div class="addPhone__foot">
+            <input (click)="addOrEditPage()" type="button" value="Save">
+        </div>
+    </div>
+</div>
